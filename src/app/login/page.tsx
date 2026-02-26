@@ -1,0 +1,45 @@
+import { Metadata } from "next";
+import { login } from "./actions";
+import SubmitButton from "./submitButton";
+
+export const metadata: Metadata = {
+  title: "Login | NetScrunch by Netpace",
+};
+
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: { error: string };
+}) {
+  const { error } = await searchParams;
+
+  const errorText =
+    error === "invalid_credentials" ? "Invalid credentials" : "";
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-950">
+      <form
+        action={login}
+        className="space-y-4 w-full max-w-md p-6 bg-gray-800 rounded shadow"
+      >
+        <h1 className="text-2xl font-bold text-center">NetScrunch</h1>
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Password"
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+        {errorText && <div className="text-red-500">{errorText}</div>}
+        <SubmitButton />
+      </form>
+    </div>
+  );
+}
