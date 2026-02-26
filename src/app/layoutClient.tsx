@@ -94,20 +94,24 @@ export function LayoutClient({
           <SectionLabel>Pipeline</SectionLabel>
 
           {isB2B && (
-            <NavItem
+            <PipelineNavItem
               href="/intended-customer-profiles"
               icon={<UserStar size={15} />}
               label="ICPs"
+              step="Step 1"
+              description="Define ideal customers"
               active={isActive("/intended-customer-profiles")}
               dotColor="#ef4444"
             />
           )}
 
           {isB2B && (
-            <NavItem
+            <PipelineNavItem
               href="/prospects"
               icon={<UserSearch size={15} />}
               label="Prospects"
+              step="Step 2"
+              description="Find and qualify"
               active={isActive("/prospects")}
               badge={prospectCount > 0 ? prospectCount : undefined}
               badgeColor="blue"
@@ -115,20 +119,24 @@ export function LayoutClient({
             />
           )}
 
-          <NavItem
+          <PipelineNavItem
             href="/leads"
             icon={<Users size={15} />}
             label="Leads"
+            step="Step 3"
+            description="Nurture and convert"
             active={isActive("/leads")}
             badge={leadCount > 0 ? leadCount : undefined}
             badgeColor="purple"
             dotColor="#8b5cf6"
           />
 
-          <NavItem
+          <PipelineNavItem
             href="/deals"
             icon={<Briefcase size={15} />}
             label="Deals"
+            step="Step 4"
+            description="Close and track"
             active={isActive("/deals")}
             badge={dealCount > 0 ? dealCount : undefined}
             badgeColor="green"
@@ -346,5 +354,77 @@ function FunnelRow({
         {count}
       </span>
     </div>
+  );
+}
+
+/* ── Pipeline Nav Item with step description ── */
+function PipelineNavItem({
+  href,
+  icon,
+  label,
+  step,
+  description,
+  active,
+  badge,
+  badgeColor = "blue",
+  dotColor,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  step: string;
+  description: string;
+  active: boolean;
+  badge?: number;
+  badgeColor?: "red" | "blue" | "purple" | "green";
+  dotColor?: string;
+}) {
+  const badgeStyles: Record<string, string> = {
+    red: "bg-red-500 text-white",
+    blue: "bg-blue-500/20 text-blue-400",
+    purple: "bg-purple-500/20 text-purple-400",
+    green: "bg-green-500/20 text-green-400",
+  };
+
+  return (
+    <Link
+      href={href}
+      className={`group flex flex-col gap-1 px-3 py-2.5 rounded-md text-sm transition-colors mb-1 ${
+        active
+          ? "bg-gray-800 text-gray-100 font-medium"
+          : "text-gray-500 hover:bg-gray-800/60 hover:text-gray-300"
+      }`}
+    >
+      <div className="flex items-center gap-2.5">
+        {dotColor ? (
+          <span
+            style={{ color: dotColor }}
+            className="flex-shrink-0 w-[15px] flex items-center justify-center"
+          >
+            <svg width="7" height="7" viewBox="0 0 8 8" fill="currentColor">
+              <circle cx="4" cy="4" r="4" />
+            </svg>
+          </span>
+        ) : (
+          <span className="flex-shrink-0 text-current">{icon}</span>
+        )}
+        <span className="flex-1 truncate">{label}</span>
+        {badge !== undefined && (
+          <span
+            className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full font-mono flex-shrink-0 ${badgeStyles[badgeColor]}`}
+          >
+            {badge > 99 ? "99+" : badge}
+          </span>
+        )}
+      </div>
+      <div className="flex items-center gap-2 ml-[15px]">
+        <span className="text-[9px] font-semibold text-blue-400/80 uppercase tracking-tight">
+          {step}
+        </span>
+        <span className="text-[9px] text-gray-500 group-hover:text-gray-400 transition-colors">
+          {description}
+        </span>
+      </div>
+    </Link>
   );
 }
