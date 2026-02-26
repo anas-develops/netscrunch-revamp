@@ -95,7 +95,36 @@ export function GlobalActivityClient({
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Global Activity Feed</h1>
+      <div className="flex items-start justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold">Global Activity Feed</h1>
+          {(role === "manager" || role === "admin") && (
+            <div className="mt-2 bg-blue-900/20 border border-blue-800/30 rounded-lg p-2.5">
+              <p className="text-xs font-semibold text-blue-400 mb-1.5 flex items-center gap-1.5">
+                <span>📋</span> Weekly Workflow: Activity Monitoring
+              </p>
+              <ol className="text-xs text-gray-300 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">1.</span>
+                  <span>Filter by date range (last 7 days)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">2.</span>
+                  <span>Filter by entity type to review specific activities</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">3.</span>
+                  <span>Review team activity patterns and engagement levels</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">4.</span>
+                  <span>Identify reps with low activity for coaching</span>
+                </li>
+              </ol>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* Filters */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

@@ -359,6 +359,29 @@ export default function LeadsClient({
               {leads.count} total
             </span>
           </h1>
+          <div className="mt-2 bg-blue-900/20 border border-blue-800/30 rounded-lg p-2.5">
+            <p className="text-xs font-semibold text-blue-400 mb-1.5 flex items-center gap-1.5">
+              <span>📋</span> Weekly Workflow: Lead Distribution Review
+            </p>
+            <ol className="text-xs text-gray-300 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 font-bold">1.</span>
+                <span>Use <span className="text-blue-300 font-medium">Owner</span> filter to view leads by team member</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 font-bold">2.</span>
+                <span>Check for uneven distribution and note leads needing reassignment</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 font-bold">3.</span>
+                <span>Reassign overloaded leads to available reps</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-blue-400 font-bold">4.</span>
+                <span>Review lead status and follow-up on stalled leads</span>
+              </li>
+            </ol>
+          </div>
         </div>
         <div className="flex gap-2">
           <button

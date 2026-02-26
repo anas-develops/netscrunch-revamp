@@ -140,6 +140,29 @@ export default function IntendedCustomerProfilesClient({
               {icps.count} total
             </span>
           </h1>
+          <div className="mt-2 bg-green-900/20 border border-green-800/30 rounded-lg p-2.5">
+            <p className="text-xs font-semibold text-green-400 mb-1.5 flex items-center gap-1.5">
+              <span>🎯</span> Monthly Workflow: ICP Analysis
+            </p>
+            <ol className="text-xs text-gray-300 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 font-bold">1.</span>
+                <span>Review which ICPs generate the most leads</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 font-bold">2.</span>
+                <span>Check <Link href="/prospects" className="text-green-400 hover:underline font-medium">Prospects</Link> by ICP tag to assess quality</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 font-bold">3.</span>
+                <span>Identify low-performing ICPs to deprioritize</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 font-bold">4.</span>
+                <span>Create new ICPs for emerging segments</span>
+              </li>
+            </ol>
+          </div>
         </div>
         <div className="flex gap-2">
           <button

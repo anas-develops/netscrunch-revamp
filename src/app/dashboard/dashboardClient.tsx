@@ -103,11 +103,13 @@ export function DashboardClient({
   metrics,
   userRole,
   userName,
+  department,
   timePeriod: initialTimePeriod,
 }: {
   metrics: Metric;
   userRole: string;
   userName: string;
+  department: string;
   timePeriod: TimePeriod;
 }) {
   const router = useRouter();
@@ -121,6 +123,7 @@ export function DashboardClient({
   const [isPending, startTransition] = useTransition();
 
   const isManager = userRole === "manager" || userRole === "admin";
+  const isB2B = department === "B2B" || userRole === "admin";
 
   const taskSummary: Metric["task_summary"] =
     viewMode === "personal" && metrics.personal_task_summary
@@ -163,6 +166,9 @@ export function DashboardClient({
               </span>
             )}
           </h1>
+          {isManager && viewMode === "manager" && isB2B && (
+            <WorkflowHint timePeriod={timePeriod} />
+          )}
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2">
@@ -923,4 +929,105 @@ function TabButton({
       {children}
     </button>
   );
+}
+
+/* ── Workflow Hint for B2B Managers ── */
+function WorkflowHint({ timePeriod }: { timePeriod: TimePeriod }) {
+  if (timePeriod === "weekly") {
+    return (
+      <div className="mt-3 bg-blue-900/20 border border-blue-800/30 rounded-lg p-3 max-w-2xl">
+        <p className="text-xs font-semibold text-blue-400 mb-2 flex items-center gap-1.5">
+          <span>📋</span> Weekly Pipeline Review Workflow
+        </p>
+        <ol className="text-xs text-gray-300 space-y-1.5">
+          <li className="flex items-start gap-2">
+            <span className="text-blue-400 font-bold">1.</span>
+            <span>Review KPIs above and check <Link href="/dashboard?time_period=weekly" className="text-blue-400 hover:underline font-medium">Industry Insights</Link> tab for top-performing industries</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-blue-400 font-bold">2.</span>
+            <span>Check <Link href="/dashboard?time_period=weekly" className="text-blue-400 hover:underline font-medium">Team Performance</Link> tab to identify reps needing support</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-blue-400 font-bold">3.</span>
+            <span>Review <Link href="/activity" className="text-blue-400 hover:underline font-medium">Activity Log</Link> for team engagement (last 7 days)</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-blue-400 font-bold">4.</span>
+            <span>Check <Link href="/tasks" className="text-blue-400 hover:underline font-medium">Tasks</Link> for overdue items and team workload</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-blue-400 font-bold">5.</span>
+            <span>Review <Link href="/leads" className="text-blue-400 hover:underline font-medium">Leads</Link> distribution and reassign if needed</span>
+          </li>
+        </ol>
+      </div>
+    );
+  }
+
+  if (timePeriod === "monthly") {
+    return (
+      <div className="mt-3 bg-green-900/20 border border-green-800/30 rounded-lg p-3 max-w-2xl">
+        <p className="text-xs font-semibold text-green-400 mb-2 flex items-center gap-1.5">
+          <span>🎯</span> Monthly Strategy & ICP Optimization Workflow
+        </p>
+        <ol className="text-xs text-gray-300 space-y-1.5">
+          <li className="flex items-start gap-2">
+            <span className="text-green-400 font-bold">1.</span>
+            <span>Review monthly metrics: conversion rates, revenue by stream</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-green-400 font-bold">2.</span>
+            <span>Analyze <Link href="/intended-customer-profiles" className="text-green-400 hover:underline font-medium">ICPs</Link> to identify high-performing segments</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-green-400 font-bold">3.</span>
+            <span>Review <Link href="/prospects" className="text-green-400 hover:underline font-medium">Prospects</Link> by ICP tag to assess quality</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-green-400 font-bold">4.</span>
+            <span>Check <Link href="/leads" className="text-green-400 hover:underline font-medium">Leads</Link> source performance on dashboard</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-green-400 font-bold">5.</span>
+            <span>Adjust ICP targeting and communicate changes to team</span>
+          </li>
+        </ol>
+      </div>
+    );
+  }
+
+  if (timePeriod === "quarterly") {
+    return (
+      <div className="mt-3 bg-purple-900/20 border border-purple-800/30 rounded-lg p-3 max-w-2xl">
+        <p className="text-xs font-semibold text-purple-400 mb-2 flex items-center gap-1.5">
+          <span>📊</span> Quarterly Business Review Prep Workflow
+        </p>
+        <ol className="text-xs text-gray-300 space-y-1.5">
+          <li className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">1.</span>
+            <span>Capture screenshots of all quarterly metrics and charts</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">2.</span>
+            <span>Compare to previous quarters and calculate growth rates</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">3.</span>
+            <span>Export <Link href="/activity" className="text-purple-400 hover:underline font-medium">Activity</Link> data for team performance summary</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">4.</span>
+            <span>Review <Link href="/deals" className="text-purple-400 hover:underline font-medium">Deals</Link> pipeline and calculate velocity</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-purple-400 font-bold">5.</span>
+            <span>Project next quarter's revenue and identify gaps</span>
+          </li>
+        </ol>
+      </div>
+    );
+  }
+
+  return null;
 }

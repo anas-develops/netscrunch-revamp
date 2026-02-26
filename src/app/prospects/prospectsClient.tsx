@@ -399,6 +399,29 @@ export default function ProspectsClient({
               {prospects.count} total
             </span>
           </h1>
+          <div className="mt-2 bg-green-900/20 border border-green-800/30 rounded-lg p-2.5">
+            <p className="text-xs font-semibold text-green-400 mb-1.5 flex items-center gap-1.5">
+              <span>🎯</span> Monthly Workflow: Prospect Quality Review
+            </p>
+            <ol className="text-xs text-gray-300 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 font-bold">1.</span>
+                <span>Use <span className="text-green-300 font-medium">ICP Tag</span> filter to view prospects by each ICP</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 font-bold">2.</span>
+                <span>Use <span className="text-green-300 font-medium">More filters</span> to identify patterns (company, job title, location)</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 font-bold">3.</span>
+                <span>Review conversion rate from prospect to lead by ICP</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-green-400 font-bold">4.</span>
+                <span>Cross-reference with <Link href="/intended-customer-profiles" className="text-green-400 hover:underline font-medium">ICPs</Link> performance</span>
+              </li>
+            </ol>
+          </div>
         </div>
         <div className="flex gap-2">
           <button

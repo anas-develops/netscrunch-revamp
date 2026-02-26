@@ -136,10 +136,35 @@ export default function TasksClient({
     <div className="p-4 md:p-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-bold">Tasks</h1>
+        <div>
+          <h1 className="text-2xl font-bold">Tasks</h1>
+          {role === "manager" && view === "team" && (
+            <div className="mt-2 bg-blue-900/20 border border-blue-800/30 rounded-lg p-2.5">
+              <p className="text-xs font-semibold text-blue-400 mb-1.5 flex items-center gap-1.5">
+                <span>📋</span> Weekly Workflow: Task Oversight
+              </p>
+              <ol className="text-xs text-gray-300 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">1.</span>
+                  <span>Review overdue tasks and identify blockers</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">2.</span>
+                  <span>Filter by team member to review individual workloads</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">3.</span>
+                  <span>Reassign tasks from overloaded reps to available team members</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">4.</span>
+                  <span>Schedule 1:1s with reps who have high overdue task counts</span>
+                </li>
+              </ol>
+            </div>
+          )}
+        </div>
       </div>
-
-      {/* View Toggle */}
       <div className="flex mb-6">
         <button
           onClick={() => setView("my")}
