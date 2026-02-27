@@ -124,6 +124,7 @@ export function DashboardClient({
 
   const isManager = userRole === "manager" || userRole === "admin";
   const isB2B = department === "B2B" || userRole === "admin";
+  const isSalesRep = userRole === "sales_rep";
 
   const taskSummary: Metric["task_summary"] =
     viewMode === "personal" && metrics.personal_task_summary
@@ -166,9 +167,9 @@ export function DashboardClient({
               </span>
             )}
           </h1>
-          {isManager && viewMode === "manager" && isB2B && (
-            <WorkflowHint timePeriod={timePeriod} />
-          )}
+          {(isManager && viewMode === "manager" && isB2B) || userRole === "sales_rep" ? (
+            <WorkflowHint timePeriod={timePeriod} userRole={userRole} department={department} />
+          ) : null}
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2">
@@ -932,8 +933,12 @@ function TabButton({
 }
 
 /* ── Workflow Hint for B2B Managers ── */
-function WorkflowHint({ timePeriod }: { timePeriod: TimePeriod }) {
-  if (timePeriod === "weekly") {
+function WorkflowHint({ timePeriod, userRole, department }: { timePeriod: TimePeriod; userRole: string; department: string }) {
+  const isManager = userRole === "manager" || userRole === "admin";
+  const isB2B = department === "B2B" || userRole === "admin";
+  const isSalesRep = userRole === "sales_rep";
+
+  if (isManager && isB2B && timePeriod === "weekly") {
     return (
       <div className="mt-3 bg-blue-900/20 border border-blue-800/30 rounded-lg p-3 max-w-2xl">
         <p className="text-xs font-semibold text-blue-400 mb-2 flex items-center gap-1.5">
@@ -965,7 +970,7 @@ function WorkflowHint({ timePeriod }: { timePeriod: TimePeriod }) {
     );
   }
 
-  if (timePeriod === "monthly") {
+  if (isManager && isB2B && timePeriod === "monthly") {
     return (
       <div className="mt-3 bg-green-900/20 border border-green-800/30 rounded-lg p-3 max-w-2xl">
         <p className="text-xs font-semibold text-green-400 mb-2 flex items-center gap-1.5">
@@ -1023,6 +1028,39 @@ function WorkflowHint({ timePeriod }: { timePeriod: TimePeriod }) {
           <li className="flex items-start gap-2">
             <span className="text-purple-400 font-bold">5.</span>
             <span>Project next quarter's revenue and identify gaps</span>
+          </li>
+        </ol>
+      </div>
+    );
+  }
+
+  /* ── Sales Rep Daily Workflow ── */
+  if (isSalesRep && timePeriod === "daily") {
+    return (
+      <div className="mt-3 bg-amber-900/20 border border-amber-800/30 rounded-lg p-3 max-w-2xl">
+        <p className="text-xs font-semibold text-amber-400 mb-2 flex items-center gap-1.5">
+          <span>⚡</span> Daily Sales Activity Routine
+        </p>
+        <ol className="text-xs text-gray-300 space-y-1.5">
+          <li className="flex items-start gap-2">
+            <span className="text-amber-400 font-bold">1.</span>
+            <span>Check <Link href="/tasks" className="text-amber-400 hover:underline font-medium">Tasks</Link> — complete overdue tasks first, then today's priorities</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-amber-400 font-bold">2.</span>
+            <span>Review <Link href="/leads?status=Warmed-Up" className="text-amber-400 hover:underline font-medium">Leads</Link> needing follow-up (filter by your name)</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-amber-400 font-bold">3.</span>
+            <span>Conduct <Link href="/prospects" className="text-amber-400 hover:underline font-medium">Prospect Outreach</Link> (filter: Not Contacted, Attempted to Contact)</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-amber-400 font-bold">4.</span>
+            <span>Advance <Link href="/deals" className="text-amber-400 hover:underline font-medium">Deals</Link> — review and schedule next steps for each active deal</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-amber-400 font-bold">5.</span>
+            <span>End-of-day: Mark completed tasks, create tomorrow's priorities</span>
           </li>
         </ol>
       </div>

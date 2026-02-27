@@ -65,6 +65,7 @@ const clearPendingUpdates = () => {
 
 export default function ProspectsClient({
   initialData,
+  role,
 }: {
   initialData: {
     prospects: Prospect[];
@@ -72,6 +73,7 @@ export default function ProspectsClient({
     icps: Array<IntendedCustomerProfile & { value: string; label: string }> | null;
     count: number;
   };
+  role: string;
 }) {
   const [prospects, setProspects] = useState<{
     prospects: Prospect[];
@@ -399,29 +401,59 @@ export default function ProspectsClient({
               {prospects.count} total
             </span>
           </h1>
-          <div className="mt-2 bg-green-900/20 border border-green-800/30 rounded-lg p-2.5">
-            <p className="text-xs font-semibold text-green-400 mb-1.5 flex items-center gap-1.5">
-              <span>🎯</span> Monthly Workflow: Prospect Quality Review
-            </p>
-            <ol className="text-xs text-gray-300 space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 font-bold">1.</span>
-                <span>Use <span className="text-green-300 font-medium">ICP Tag</span> filter to view prospects by each ICP</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 font-bold">2.</span>
-                <span>Use <span className="text-green-300 font-medium">More filters</span> to identify patterns (company, job title, location)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 font-bold">3.</span>
-                <span>Review conversion rate from prospect to lead by ICP</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-400 font-bold">4.</span>
-                <span>Cross-reference with <Link href="/intended-customer-profiles" className="text-green-400 hover:underline font-medium">ICPs</Link> performance</span>
-              </li>
-            </ol>
-          </div>
+          {role === "sales_rep" ? (
+            <div className="mt-2 bg-amber-900/20 border border-amber-800/30 rounded-lg p-2.5">
+              <p className="text-xs font-semibold text-amber-400 mb-1.5 flex items-center gap-1.5">
+                <span>🎯</span> Lead Qualification & Conversion Workflow
+              </p>
+              <ol className="text-xs text-gray-300 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">1.</span>
+                  <span>Filter by <span className="text-amber-300 font-medium">Owner</span> (your name) and status: Not Contacted, Pre-Qualified</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">2.</span>
+                  <span>Review prospect details: company, job title, ICP tag match</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">3.</span>
+                  <span>Execute outreach (email, LinkedIn, call) and document in activity</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">4.</span>
+                  <span>Update status based on response (or no response)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">5.</span>
+                  <span>Qualified? Click "Convert to Lead" and fill in details</span>
+                </li>
+              </ol>
+            </div>
+          ) : (
+            <div className="mt-2 bg-green-900/20 border border-green-800/30 rounded-lg p-2.5">
+              <p className="text-xs font-semibold text-green-400 mb-1.5 flex items-center gap-1.5">
+                <span>🎯</span> Monthly Workflow: Prospect Quality Review
+              </p>
+              <ol className="text-xs text-gray-300 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 font-bold">1.</span>
+                  <span>Use <span className="text-green-300 font-medium">ICP Tag</span> filter to view prospects by each ICP</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 font-bold">2.</span>
+                  <span>Use <span className="text-green-300 font-medium">More filters</span> to identify patterns (company, job title, location)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 font-bold">3.</span>
+                  <span>Review conversion rate from prospect to lead by ICP</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 font-bold">4.</span>
+                  <span>Cross-reference with <Link href="/intended-customer-profiles" className="text-green-400 hover:underline font-medium">ICPs</Link> performance</span>
+                </li>
+              </ol>
+            </div>
+          )}
         </div>
         <div className="flex gap-2">
           <button

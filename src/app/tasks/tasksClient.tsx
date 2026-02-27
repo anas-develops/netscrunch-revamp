@@ -163,6 +163,31 @@ export default function TasksClient({
               </ol>
             </div>
           )}
+          {role === "sales_rep" && view === "my" && (
+            <div className="mt-2 bg-amber-900/20 border border-amber-800/30 rounded-lg p-2.5">
+              <p className="text-xs font-semibold text-amber-400 mb-1.5 flex items-center gap-1.5">
+                <span>⚡</span> Daily Workflow: Task Management
+              </p>
+              <ol className="text-xs text-gray-300 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">1.</span>
+                  <span>Complete <span className="text-amber-300 font-medium">overdue tasks</span> first (highest priority)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">2.</span>
+                  <span>Sort by due date to plan today's execution order</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">3.</span>
+                  <span>Click each task to view details and mark complete after execution</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">4.</span>
+                  <span>Create tasks for tomorrow before ending your day</span>
+                </li>
+              </ol>
+            </div>
+          )}
         </div>
       </div>
       <div className="flex mb-6">

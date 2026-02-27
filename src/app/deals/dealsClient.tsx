@@ -35,12 +35,14 @@ const SOURCE_OPTIONS = [
 
 export default function DealsClient({
   initialData,
+  role,
 }: {
   initialData: {
     deals: Deal[];
     count: number;
     owners: Owner[];
   };
+  role: string;
 }) {
   const [deals, setDeals] = useState({
     deals: initialData.deals,
@@ -113,6 +115,59 @@ export default function DealsClient({
               {deals.count} total
             </span>
           </h1>
+          {role === "sales_rep" ? (
+            <div className="mt-2 bg-amber-900/20 border border-amber-800/30 rounded-lg p-2.5">
+              <p className="text-xs font-semibold text-amber-400 mb-1.5 flex items-center gap-1.5">
+                <span>💰</span> Daily Workflow: Deal Progression
+              </p>
+              <ol className="text-xs text-gray-300 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">1.</span>
+                  <span>Filter by <span className="text-amber-300 font-medium">Owner</span> (your name) and active stages</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">2.</span>
+                  <span>Click "View" to review deal details and associated lead</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">3.</span>
+                  <span>Identify next steps: schedule meeting, send proposal, follow up</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">4.</span>
+                  <span>Update deal stage when appropriate after customer action</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">5.</span>
+                  <span>Create tasks for each deal to track your next actions</span>
+                </li>
+              </ol>
+            </div>
+          ) : (
+            <div className="mt-2 bg-blue-900/20 border border-blue-800/30 rounded-lg p-2.5">
+              <p className="text-xs font-semibold text-blue-400 mb-1.5 flex items-center gap-1.5">
+                <span>📊</span> Weekly Workflow: Deal Pipeline Review
+              </p>
+              <ol className="text-xs text-gray-300 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">1.</span>
+                  <span>Review deals by stage and identify stalled opportunities</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">2.</span>
+                  <span>Check deal velocity and time in each stage</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">3.</span>
+                  <span>Help reps remove blockers on high-value deals</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">4.</span>
+                  <span>Forecast monthly/quarterly revenue based on pipeline</span>
+                </li>
+              </ol>
+            </div>
+          )}
         </div>
         <div className="flex gap-2">
           <button

@@ -66,6 +66,7 @@ const clearPendingUpdates = () => {
 export default function LeadsClient({
   fetchLeads,
   initialData,
+  role,
 }: {
   fetchLeads: (
     search?: string | null,
@@ -87,6 +88,7 @@ export default function LeadsClient({
     icps: Array<{ value: string; label: string; tag_color: string }> | null;
     count: number;
   };
+  role: string;
 }) {
   const [leads, setLeads] = useState<{ leads: Lead[]; count: number }>({
     leads: initialData.leads || [],
@@ -359,29 +361,59 @@ export default function LeadsClient({
               {leads.count} total
             </span>
           </h1>
-          <div className="mt-2 bg-blue-900/20 border border-blue-800/30 rounded-lg p-2.5">
-            <p className="text-xs font-semibold text-blue-400 mb-1.5 flex items-center gap-1.5">
-              <span>📋</span> Weekly Workflow: Lead Distribution Review
-            </p>
-            <ol className="text-xs text-gray-300 space-y-1">
-              <li className="flex items-start gap-2">
-                <span className="text-blue-400 font-bold">1.</span>
-                <span>Use <span className="text-blue-300 font-medium">Owner</span> filter to view leads by team member</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-400 font-bold">2.</span>
-                <span>Check for uneven distribution and note leads needing reassignment</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-400 font-bold">3.</span>
-                <span>Reassign overloaded leads to available reps</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-400 font-bold">4.</span>
-                <span>Review lead status and follow-up on stalled leads</span>
-              </li>
-            </ol>
-          </div>
+          {role === "manager" || role === "admin" ? (
+            <div className="mt-2 bg-blue-900/20 border border-blue-800/30 rounded-lg p-2.5">
+              <p className="text-xs font-semibold text-blue-400 mb-1.5 flex items-center gap-1.5">
+                <span>📋</span> Weekly Workflow: Lead Distribution Review
+              </p>
+              <ol className="text-xs text-gray-300 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">1.</span>
+                  <span>Use <span className="text-blue-300 font-medium">Owner</span> filter to view leads by team member</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">2.</span>
+                  <span>Check for uneven distribution and note leads needing reassignment</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">3.</span>
+                  <span>Reassign overloaded leads to available reps</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-blue-400 font-bold">4.</span>
+                  <span>Review lead status and follow-up on stalled leads</span>
+                </li>
+              </ol>
+            </div>
+          ) : role === "sales_rep" && (
+            <div className="mt-2 bg-amber-900/20 border border-amber-800/30 rounded-lg p-2.5">
+              <p className="text-xs font-semibold text-amber-400 mb-1.5 flex items-center gap-1.5">
+                <span>💼</span> Daily Workflow: Lead Follow-ups
+              </p>
+              <ol className="text-xs text-gray-300 space-y-1">
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">1.</span>
+                  <span>Use <span className="text-amber-300 font-medium">Owner</span> filter to view your leads</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">2.</span>
+                  <span>Filter by status: Warmed-Up, Negotiating, or Proposal Sent</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">3.</span>
+                  <span>Click "View" to review activity history before follow-up</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">4.</span>
+                  <span>Execute planned follow-up and log activity</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-amber-400 font-bold">5.</span>
+                  <span>Create next task for each lead before moving on</span>
+                </li>
+              </ol>
+            </div>
+          )}
         </div>
         <div className="flex gap-2">
           <button
